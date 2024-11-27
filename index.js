@@ -16,9 +16,18 @@ conectarDB();
 
 //habilitaamos cors
 console.log(process.env.FRONTEND_URL);
- 
+const whitelist = ['http://localhost:3000', 'https://frontemprendar.vercel.app/','https://firulais-app.vercel.app/' ]; // Lista de URLs permitidas
+
 const opcionesCors = {
-  origin: process.env.FRONTEND_URL,
+  origin: (origin, callback) => {
+    if (whitelist.includes(origin) || !origin) {
+      // Permitir la solicitud si la URL está en la lista blanca o si no hay un origin (como en herramientas locales)
+      callback(null, true);
+    } else {
+      // Rechazar la solicitud si el origin no está permitido
+      callback(new Error('No autorizado por CORS'));
+    }
+  },
   methods: 'GET,POST,PUT',
   allowedHeaders: 'Content-Type,Authorization', // Permitir encabezado Authorization
   credentials: true, // Permitir credenciales si es necesario
