@@ -16,7 +16,9 @@ conectarDB();
 
 //habilitaamos cors
 console.log(process.env.FRONTEND_URL);
-const whitelist = ['http://localhost:3000', 'https://frontemprendar.vercel.app/','https://firulais-app.vercel.app/' ]; // Lista de URLs permitidas
+const whitelist = ['http://localhost:3000', 'https://frontemprendar.vercel.app','https://firulais-app.vercel.app' ]; // Lista de URLs permitidas
+
+
 
 const opcionesCors = {
   origin: (origin, callback) => {
