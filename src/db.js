@@ -2,32 +2,10 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const { PGURI } = process.env;
+const { PGURI, EMAIL_ADMIN, PASS_ADMIN } = process.env;
 const bcrypt = require("bcrypt")
 
-//conexion online
-// const sequelize = new Sequelize(
-//   "postgres://emprendar_r2dy_user:9JBOHhbNSD9uBMDuSdEzHhQXaPCQ3lZx@dpg-col816ocmk4c73bnfdjg-a.oregon-postgres.render.com/emprendar_r2dy",
-//   {
-//     dialect: "postgres",
-//     logging: false,
-//     native: false,
-//     dialectOptions: {
-//       ssl: true 
-//     }
-//   }
-// );
- 
-//conexion local
 
-// const sequelize = new Sequelize(
-//   `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`,
-//   {
-//     dialect: "postgres",
-//     logging: false,
-//     native: false
-//   }
-// ); 
 const sequelize = new Sequelize(PGURI, {
        dialect: "postgres",
        logging: false,
@@ -115,13 +93,9 @@ sequelize
       "Guatemala",
     ];
 
-    let admin =  { user_name: "Emprendar", name: "Emprendar", last_name: "Admin", email: "emprendar@emprendar.com", password: "emprendar123", profile_img: "", confirmed: true, isAdmin: true }
+    let admin =  { user_name: "Emprendar", name: "Emprendar", last_name: "Admin", email:EMAIL_ADMIN, password:PASS_ADMIN, profile_img: "", confirmed: true, isAdmin: true }
 
-    // await User.findOrCreate(
-    //   {
-    //     ...admin,password: await bcrypt.hash(admin.password, 8)
-    //   }
-    // )
+
     await User.findOrCreate({
       where:{user_name : admin.user_name},
       defaults:{
@@ -130,7 +104,7 @@ sequelize
       } 
     })
 /
-
+ 
     arrCountry.forEach(async (country) => {
       Country.findOrCreate({
         where : {
