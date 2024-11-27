@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const { PGUSER, PGDATABASE, PGPASSWORD, PGHOST, PGPORT } = process.env;
+const { PGURI } = process.env;
 const bcrypt = require("bcrypt")
 
 //conexion online
@@ -13,22 +13,26 @@ const bcrypt = require("bcrypt")
 //     logging: false,
 //     native: false,
 //     dialectOptions: {
-//       ssl: true
+//       ssl: true 
 //     }
 //   }
 // );
-
+ 
 //conexion local
 
-const sequelize = new Sequelize(
-  `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`,
-  {
-    dialect: "postgres",
-    logging: false,
-    native: false,
-  }
-);
- 
+// const sequelize = new Sequelize(
+//   `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`,
+//   {
+//     dialect: "postgres",
+//     logging: false,
+//     native: false
+//   }
+// ); 
+const sequelize = new Sequelize(PGURI, {
+       dialect: "postgres",
+       logging: false,
+       native: false
+     })
 
 
 
